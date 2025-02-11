@@ -22,14 +22,14 @@ Add a package to your dev enviornment by running the command:
 
 Save any future dependencies you add by running the command:
 
-`pip freeze -r requirements.txt`
+`pip freeze > requirements.txt`
 
 ## Flask
 
 ### `/templates`
 
 This is the directory where html files are stored.
-In order to render html file from this directory use `render_template(<file-name>)`
+In order to render html file from this directory use `render_template('<file-name>')`
 
 ### `/static`
 
