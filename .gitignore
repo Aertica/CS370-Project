@@ -172,3 +172,8 @@ cython_debug/
 
 # VS Code
 .vscode/
+
+# Database
+
+*.db
+*.db-journal
