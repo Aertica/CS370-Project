@@ -1,0 +1,2 @@
+INSERT INTO weather_data ('temperature', 'humidity', 'pressure', 'wind_speed', 'utc')
+    VALUES (RANDOM() % 100 / 10.0, RANDOM() % 100 / 10.0, RANDOM() % 100 / 10.0, RANDOM() % 100 / 10.0, ABS(RANDOM()) % 10000000);
