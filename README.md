@@ -24,6 +24,10 @@ Save any future dependencies you add by running the command:
 
 `pip freeze > requirements.txt`
 
+## Debugging
+
+In the root directory run `python src/main.py` to debug.
+
 ## Flask
 
 ### `/templates`

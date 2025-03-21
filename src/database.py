@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 with open('sql/CREATE_TABLES.sql', 'r') as f:
     create_script = f.read()
@@ -29,7 +30,7 @@ class WeatherData:
             'humidity': self.humidity,
             'pressure': self.pressure,
             'wind_speed': self.wind_speed,
-            'utc': self.utc,
+            'utc': datetime.fromtimestamp(self.utc).strftime('%Y-%m-%d %H:%M:%S'),
         }
 
     def __repr__(self):

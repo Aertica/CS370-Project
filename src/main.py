@@ -15,7 +15,7 @@ def index():
     return render_template('index.html', data=data.as_dict())
 
 if __name__ == "__main__":
-    #database = Database('test.db', True)
-    #database.fill_with_bogus_data()
+    database = Database('test.db', True)
+    database.fill_with_bogus_data()
 
     app.run(debug=True)
