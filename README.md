@@ -24,6 +24,10 @@ Save any future dependencies you add by running the command:
 
 `pip freeze > requirements.txt`
 
+## Debugging
+
+In the root directory run `python src/main.py` to debug.
+
 ## Flask
 
 ### `/templates`
@@ -34,3 +38,21 @@ In order to render html file from this directory use `render_template('<file-nam
 ### `/static`
 
 This is the directory where css and javascript files are stored.
+
+## Database
+
+Connect to a database through `Database(file, overrride_existing)`, where `file` is the path to the database file, and `override_existing` specifies if it should connect to an existing database or create a new one with no data.
+
+`Add(data)` inserts one row into the database. `get_recent(n)` gets the top n rows, when sorting by time.
+
+### WeatherData
+
+`self.temperature`: 
+
+`self.humidity`: 
+
+`self.pressure`: 
+
+`self.wind_speed` :
+
+`self.utc`: unix timestamp at the time the data was recorded (see [here](https://en.wikipedia.org/wiki/Unix_time))

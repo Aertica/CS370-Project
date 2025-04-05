@@ -1,0 +1,1 @@
+INSERT INTO weather_data ('temperature', 'humidity', 'pressure', 'wind_speed', 'utc') VALUES ({0}, {1}, {2}, {3}, {4});
