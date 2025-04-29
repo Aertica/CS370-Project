@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS weather_data (
     humidity FLOAT,
     pressure FLOAT,
     wind_speed FLOAT,
-    utc INT
+    utc FLOAT
 );

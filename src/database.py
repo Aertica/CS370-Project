@@ -1,5 +1,7 @@
+import queue
 import sqlite3
 from datetime import datetime
+import threading
 
 with open('sql/CREATE_TABLES.sql', 'r') as f:
     create_script = f.read()
@@ -34,30 +36,58 @@ class WeatherData:
         }
 
     def __repr__(self):
-        return f"({self.temperature}, {self.humidity}, {self.pressure}, {self.wind_speed}, {self.utc})"
+        return f"({self.temperature}, {self.humidity}, {self.pressure}, {self.wind_speed}, {datetime.fromtimestamp(self.utc)})"
 
 class Database:
     def __init__(self, file, override_existing=False):
-        conn = sqlite3.connect(file)
-        self.curser = conn.cursor()
-
+        self.conn = sqlite3.connect(file, check_same_thread=False)
+        self.cursor = self.conn.cursor()
         if override_existing:
-            self.curser.executescript(delete_script)
+            self.cursor.executescript(delete_script)
+        self.cursor.executescript(create_script)
+        self.conn.commit()
 
-        self.curser.executescript(create_script)
+        self.queue = queue.Queue()
+        self.thread = threading.Thread(target=self._worker, daemon=True)
+        self.thread.start()
 
-    def add(self, data: WeatherData):
+    def _worker(self):
+        while True:
+            func, args, result_queue = self.queue.get()
+            try:
+                result = func(*args)
+                result_queue.put(result)
+            except Exception as e:
+                result_queue.put(e)
+
+    def _run_on_worker(self, func, *args):
+        result_queue = queue.Queue()
+        self.queue.put((func, args, result_queue))
+        result = result_queue.get()
+        if isinstance(result, Exception):
+            raise result
+        return result
+
+    def _add(self, data: WeatherData):
+
         sql = insert_script.format(data.temperature, data.humidity, data.pressure, data.wind_speed, data.utc)
-        self.curser.executescript(sql)
+        self.cursor.executescript(sql)
+        self.conn.commit()
 
-    def get_recent(self, n):
+    def _get_recent(self, n):
         sql = select_script.format(n)
-        res = self.curser.execute(sql)
+        res = self.cursor.execute(sql)
         list = []
         for data in res:
-            list.append(WeatherData(data[0], data[1], data[2], data[3], data[4]))
+            list.append(WeatherData(data[1], data[2], data[3], data[4], data[5]))
 
         return list
+
+    def add(self, data: WeatherData):
+        self._run_on_worker(self._add, data)
+
+    def get_recent(self, n):
+        return self._run_on_worker(self._get_recent, n)
 
     # For test purposes only
     def fill_with_bogus_data(self):
