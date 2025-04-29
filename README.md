@@ -26,7 +26,7 @@ Save any future dependencies you add by running the command:
 
 ## Debugging
 
-In the root directory run `python src/main.py` to debug.
+In the root directory run `sudo python3 src/main.py` to debug.
 
 ## Flask
 
