@@ -1,8 +1,8 @@
 import threading
 from database import Database, WeatherData
-from sensors import Anemometer
+from sensors import Anemometer, Temp
 from flask import Flask, render_template
-from datetime import datetime
+import board
 import time
 
 app = Flask(__name__)
@@ -28,10 +28,12 @@ if __name__ == "__main__":
         anemometer.start()
     threading.Thread(target=init).start()
 
+    temp = Temp(board.D4)
+
     def add_data():
         while True:
-            temperature = 0
-            humidity = 0
+            temperature = temp.temp_f()
+            humidity = temp.humidity()
             pressure = 0
             wind_speed = anemometer.current_speed
             if wind_speed == 0:

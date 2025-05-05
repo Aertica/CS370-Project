@@ -1,8 +1,7 @@
 import math
 from datetime import datetime, timezone
 from gpiozero import Button
-from signal import pause
-import time
+import adafruit_dht
 import threading
 
 class Anemometer:
@@ -29,4 +28,16 @@ class Anemometer:
             seconds = time.seconds + (time.microseconds / 1000000.0)
             radius = 0.092
             self.current_speed = math.pi * radius / seconds
-        #print(self.current_speed)
+
+class Temp:
+    def __init__(self, pin):
+        self.dht_device = adafruit_dht.DHT11(pin)
+
+    def temp_c(self):
+        return self.dht_device.temperature
+    
+    def temp_f(self):
+        return self.temp_c() * (9 / 5) + 32
+    
+    def humidity(self):
+        return self.dht_device.humidity
