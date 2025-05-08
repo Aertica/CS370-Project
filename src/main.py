@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     database = Database('data.db')
-    recent = database.get_recent(240)
+    recent = database.get_recent(60 * 60)
     if len(recent) == 0:
         recent = [WeatherData(0, 0, 0, 0, 0)]
         
