@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Data</title>
+    <script src="/static/js/script.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <div>Temperature: {{ data.temperature }}</div>
-    <div>Humidity: {{ data.humidity }}</div>
-    <div>Wind Speed: {{ data.wind_speed }}</div>
-    <div>Date: {{ data.utc }}</div>
+    <div class="container">
+        <div class="data-section">
+            <p><span class="label">Current Temperature:</span> {{ data.temperature }} °F</p>
+            <p><span class="label">Average Temperature:</span> {{ data.temperature_avg }} °F</p>
+        </div>
+        <div class="data-section">
+            <p><span class="label">Current Humidity:</span> {{ data.humidity }} %</p>
+            <p><span class="label">Average Humidity:</span> {{ data.humidity_avg }} %</p>
+        </div>
+        <div class="data-section">
+            <p><span class="label">Current Wind Speed:</span> {{ data.wind_speed }} m/s</p>
+            <p><span class="label">Average Wind Speed:</span> {{ data.wind_speed_avg }} m/s</p>
+        </div>
+        <div class="data-section">
+            <p><span class="label">Current Date:</span> {{ data.utc }}</p>
+        </div>
+    </div>
 </body>
 </html>
